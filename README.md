@@ -1,1 +1,1 @@
-# go-react-auth-demo
+#  Typescript Redux Implementation
