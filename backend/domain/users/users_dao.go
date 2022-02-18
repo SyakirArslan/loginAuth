@@ -20,7 +20,12 @@ func (user *User) Save() *errors.RestErr {
 	}
 	defer stmt.Close()
 
-	insertResult, saveErr := stmt.Exec(user.FirstName, user.LastName, user.Email, user.Password)
+	// insertResult, saveErr := stmt.Exec(user.FirstName, user.LastName, user.Email, user.Password)
+	// if saveErr != nil {
+	// 	fmt.Println(saveErr)
+	// 	return errors.NewInternalServerError("database error")
+
+	insertResult, saveErr := stmt.Exec(user.Email, user.Password)
 	if saveErr != nil {
 		fmt.Println(saveErr)
 		return errors.NewInternalServerError("database error")
@@ -41,8 +46,13 @@ func (user *User) GetByEmail() *errors.RestErr {
 	}
 	defer stmt.Close()
 
+	// result := stmt.QueryRow(user.Email)
+	// if getErr := result.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email, &user.Password); getErr != nil {
+	// 	fmt.Println(getErr)
+	// 	return errors.NewInternalServerError("database error")
+
 	result := stmt.QueryRow(user.Email)
-	if getErr := result.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email, &user.Password); getErr != nil {
+	if getErr := result.Scan(&user.ID, &user.Email, &user.Password); getErr != nil {
 		fmt.Println(getErr)
 		return errors.NewInternalServerError("database error")
 	}
@@ -56,8 +66,12 @@ func (user *User) GetByID() *errors.RestErr {
 	}
 	defer stmt.Close()
 
+	// result := stmt.QueryRow(user.ID)
+	// if getErr := result.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email); getErr != nil {
+	// 	return errors.NewInternalServerError("database error")
+
 	result := stmt.QueryRow(user.ID)
-	if getErr := result.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email); getErr != nil {
+	if getErr := result.Scan(&user.ID, &user.Email); getErr != nil {
 		return errors.NewInternalServerError("database error")
 	}
 	return nil

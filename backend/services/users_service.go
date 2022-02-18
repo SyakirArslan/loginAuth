@@ -6,26 +6,26 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func CreateUser(user users.User) (*users.User, *errors.RestErr) {
-	if err := user.Validate(); err != nil {
-		return nil, err
-	}
+// func CreateUser(user users.User) (*users.User, *errors.RestErr) {
+// 	if err := user.Validate(); err != nil {
+// 		return nil, err
+// 	}
 
-	// encrpyt the password
-	pwSlice, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
-	if err != nil {
-		return nil, errors.NewBadRequestError(("failed to encrypt the password"))
-	}
+// 	// encrpyt the password
+// 	pwSlice, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
+// 	if err != nil {
+// 		return nil, errors.NewBadRequestError(("failed to encrypt the password"))
+// 	}
 
-	user.Password = string(pwSlice[:])
+// 	user.Password = string(pwSlice[:])
 
-	if err := user.Save(); err != nil {
-		return nil, err
-	}
+// 	if err := user.Save(); err != nil {
+// 		return nil, err
+// 	}
 
-	return &user, nil
+// 	return &user, nil
 
-}
+// }
 
 func GetUser(user users.User) (*users.User, *errors.RestErr) {
 	result := &users.User{Email: user.Email}
@@ -38,7 +38,10 @@ func GetUser(user users.User) (*users.User, *errors.RestErr) {
 		return nil, errors.NewBadRequestError("failed to decrypt the password")
 	}
 
-	resultWp := &users.User{ID: result.ID, FirstName: result.FirstName, LastName: result.LastName, Email: result.Email}
+	// resultWp := &users.User{ID: result.ID, FirstName: result.FirstName, LastName: result.LastName, Email: result.Email}
+	// return resultWp, nil
+
+	resultWp := &users.User{ID: result.ID, Email: result.Email}
 	return resultWp, nil
 }
 

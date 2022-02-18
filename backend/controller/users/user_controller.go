@@ -16,23 +16,23 @@ const (
 	SecretKey = "qwe123"
 )
 
-func Register(c *gin.Context) {
-	var user users.User
+// func Register(c *gin.Context) {
+// 	var user users.User
 
-	if err := c.ShouldBindJSON(&user); err != nil {
-		err := errors.NewBadRequestError("invalid json body")
-		c.JSON(err.Status, err)
-		return
-	}
+// 	if err := c.ShouldBindJSON(&user); err != nil {
+// 		err := errors.NewBadRequestError("invalid json body")
+// 		c.JSON(err.Status, err)
+// 		return
+// 	}
 
-	result, saveErr := services.CreateUser(user)
-	if saveErr != nil {
-		c.JSON(saveErr.Status, saveErr)
-		return
-	}
+// 	result, saveErr := services.CreateUser(user)
+// 	if saveErr != nil {
+// 		c.JSON(saveErr.Status, saveErr)
+// 		return
+// 	}
 
-	c.JSON(http.StatusOK, result)
-}
+// 	c.JSON(http.StatusOK, result)
+// }
 
 func Login(c *gin.Context) {
 	var user users.User
